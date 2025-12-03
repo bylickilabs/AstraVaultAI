@@ -1,4 +1,4 @@
-name: 🧠 AstraVault AI – Conda Environment Build
+name: 🧠 AstraVault AI – Conda Environment Build (Fixed)
 
 on:
   push:
@@ -8,24 +8,23 @@ on:
 
 jobs:
   build:
-    name: 🧩 Build • Lint • Test (Conda)
+    name: 🧩 Build • Lint • Test (Conda/Mambaforge)
     runs-on: ubuntu-latest
 
     steps:
       # ---------------------------------------------------------
-      # 1️⃣ Checkout the repository
+      # 1️⃣ Checkout Repository
       # ---------------------------------------------------------
       - name: 🧱 Checkout Repository
         uses: actions/checkout@v4
 
       # ---------------------------------------------------------
-      # 2️⃣ Set up Mambaforge (stable v2)
+      # 2️⃣ Set up Mambaforge (Stable Fork – No 404 Errors)
       # ---------------------------------------------------------
-      - name: ⚙️ Set up Mambaforge
-        uses: conda-incubator/setup-miniconda@v2
+      - name: ⚙️ Set up Mambaforge (Stable)
+        uses: conda-actions/setup-miniconda@v2
         with:
-          miniforge-variant: Mambaforge
-          miniforge-version: latest
+          installer-url: https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-Linux-x86_64.sh
           python-version: "3.10"
           auto-update-conda: true
           activate-environment: base
@@ -34,7 +33,7 @@ jobs:
           channel-priority: strict
 
       # ---------------------------------------------------------
-      # 3️⃣ Install dependencies
+      # 3️⃣ Install Dependencies
       # ---------------------------------------------------------
       - name: 📦 Install Dependencies
         shell: bash -l {0}
@@ -51,7 +50,7 @@ jobs:
           fi
 
       # ---------------------------------------------------------
-      # 4️⃣ Run code linting
+      # 4️⃣ Lint Code with flake8
       # ---------------------------------------------------------
       - name: 🔍 Lint Code with flake8
         shell: bash -l {0}
@@ -61,7 +60,7 @@ jobs:
           flake8 . --count --exit-zero --max-line-length=127 --statistics
 
       # ---------------------------------------------------------
-      # 5️⃣ Run tests
+      # 5️⃣ Run Unit Tests
       # ---------------------------------------------------------
       - name: 🧪 Run Unit Tests
         shell: bash -l {0}
@@ -75,12 +74,12 @@ jobs:
           fi
 
       # ---------------------------------------------------------
-      # 6️⃣ Build completion log
+      # 6️⃣ Build Completion Summary
       # ---------------------------------------------------------
       - name: ✅ Build Completed
         run: |
           echo "============================================================"
-          echo "✅ AstraVault AI – Conda (Mambaforge) build successfully completed."
+          echo "✅ AstraVault AI – Conda (Mambaforge) build completed successfully."
           echo "📦 Environment: Python 3.10 (Conda via Mambaforge)"
           echo "🔒 BYLICKILABS – Intelligence Systems & Communications"
           echo "============================================================"
