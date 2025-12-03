@@ -1,0 +1,28 @@
+name: 🛡️ AstraVault AI – CodeQL Security Scan
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  schedule:
+    - cron: '0 3 * * 1'  # weekly
+
+jobs:
+  analyze:
+    name: 🔍 CodeQL Static Analysis
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    steps:
+      - name: 🧱 Checkout Repository
+        uses: actions/checkout@v4
+      - name: ⚙️ Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: python
+      - name: 🔎 Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
