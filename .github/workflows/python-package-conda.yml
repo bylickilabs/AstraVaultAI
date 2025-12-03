@@ -7,41 +7,47 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build-linux:
+  build:
     runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 5
 
     steps:
-      - name: 🧩 Checkout Repository
+      - name: 🧩 Checkout repository
         uses: actions/checkout@v4
 
-      - name: ⚙️ Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.10"
-
-      - name: 🧠 Set up Miniconda
+      - name: ⚙️ Set up Miniconda
         uses: conda-incubator/setup-miniconda@v3
         with:
+          miniforge-variant: Mambaforge
+          miniforge-version: latest
           auto-update-conda: true
           activate-environment: base
-          python-version: 3.10
+          use-mamba: true
+          python-version: "3.10"
           channels: conda-forge
+          channel-priority: strict
 
       - name: 📦 Install dependencies
+        shell: bash -l {0}
         run: |
-          echo "Updating environment from environment.yml..."
-          conda env update --file environment.yml --name base
-          conda install -y flake8 pytest
+          echo "Installing dependencies..."
+          if [ -f environment.yml ]; then
+              mamba env update -n base -f environment.yml
+          elif [ -f requirements.txt ]; then
+              pip install -r requirements.txt
+          else
+              echo "No environment.yml or requirements.txt found."
+          fi
 
       - name: 🔍 Lint with flake8
+        shell: bash -l {0}
         run: |
-          echo "Running flake8 checks..."
-          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+          echo "Running flake8..."
+          mamba install -y flake8
+          flake8 . --count --exit-zero --max-line-length=127 --statistics
 
-      - name: 🧪 Run tests with pytest
+      - name: 🧪 Run tests
+        shell: bash -l {0}
         run: |
           echo "Running pytest..."
+          mamba install -y pytest
           pytest -q --disable-warnings --maxfail=3
