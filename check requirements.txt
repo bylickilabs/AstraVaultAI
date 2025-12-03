@@ -1,0 +1,4 @@
+pip list
+
+# or
+pip list | findstr /I "PySide6 cryptography argon2 scikit SQLAlchemy watchdog loguru numpy"
