@@ -1,6 +1,8 @@
 # 🔐 AstraVault AI – Intelligent Encrypted Data Vault  
 **BYLICKILABS – Intelligence Systems & Communications**
 
+| <img width="1280" height="640" alt="AstraVault" src="https://github.com/user-attachments/assets/a7826ab4-1687-4e92-84d6-bdbbc983430d" /> |
+|---|
 
 ---
 
