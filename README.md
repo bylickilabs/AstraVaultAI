@@ -1,5 +1,5 @@
-| [![🧠 AstraVault AI – Python Package (pip)](https://github.com/bylickilabs/AstraVaultAI/actions/workflows/pip-build.yml/badge.svg)](https://github.com/bylickilabs/AstraVaultAI/actions/workflows/pip-build.yml) |
-|---|
+| [![🧾 AstraVault AI – Repository Integrity Check](https://github.com/bylickilabs/AstraVaultAI/actions/workflows/check.yml/badge.svg)](https://github.com/bylickilabs/AstraVaultAI/actions/workflows/check.yml) | [![🧠 AstraVault AI – Python Package (pip)](https://github.com/bylickilabs/AstraVaultAI/actions/workflows/pip-build.yml/badge.svg)](https://github.com/bylickilabs/AstraVaultAI/actions/workflows/pip-build.yml) |
+|---|---|
 
 # 🔐 AstraVault AI – Intelligent Encrypted Data Vault  
 **BYLICKILABS – Intelligence Systems & Communications**
