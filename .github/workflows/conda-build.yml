@@ -13,13 +13,13 @@ jobs:
 
     steps:
       # ---------------------------------------------------------
-      # 1️⃣ Repository auschecken
+      # 1️⃣ Checkout the repository
       # ---------------------------------------------------------
       - name: 🧱 Checkout Repository
         uses: actions/checkout@v4
 
       # ---------------------------------------------------------
-      # 2️⃣ Conda / Mambaforge einrichten (stabile Version)
+      # 2️⃣ Set up Mambaforge (stable v2)
       # ---------------------------------------------------------
       - name: ⚙️ Set up Mambaforge
         uses: conda-incubator/setup-miniconda@v2
@@ -34,7 +34,7 @@ jobs:
           channel-priority: strict
 
       # ---------------------------------------------------------
-      # 3️⃣ Abhängigkeiten installieren
+      # 3️⃣ Install dependencies
       # ---------------------------------------------------------
       - name: 📦 Install Dependencies
         shell: bash -l {0}
@@ -51,7 +51,7 @@ jobs:
           fi
 
       # ---------------------------------------------------------
-      # 4️⃣ Code-Qualität prüfen
+      # 4️⃣ Run code linting
       # ---------------------------------------------------------
       - name: 🔍 Lint Code with flake8
         shell: bash -l {0}
@@ -61,7 +61,7 @@ jobs:
           flake8 . --count --exit-zero --max-line-length=127 --statistics
 
       # ---------------------------------------------------------
-      # 5️⃣ Tests mit pytest ausführen
+      # 5️⃣ Run tests
       # ---------------------------------------------------------
       - name: 🧪 Run Unit Tests
         shell: bash -l {0}
@@ -75,7 +75,7 @@ jobs:
           fi
 
       # ---------------------------------------------------------
-      # 6️⃣ Abschlussmeldung
+      # 6️⃣ Build completion log
       # ---------------------------------------------------------
       - name: ✅ Build Completed
         run: |
