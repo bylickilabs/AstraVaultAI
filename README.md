@@ -1,8 +1,8 @@
 | [![🧾 AstraVault AI – Repository Integrity Check](https://github.com/bylickilabs/AstraVaultAI/actions/workflows/check.yml/badge.svg)](https://github.com/bylickilabs/AstraVaultAI/actions/workflows/check.yml) | [![🧠 AstraVault AI – Python Package (pip)](https://github.com/bylickilabs/AstraVaultAI/actions/workflows/pip-build.yml/badge.svg)](https://github.com/bylickilabs/AstraVaultAI/actions/workflows/pip-build.yml) | [![🎨 AstraVault AI – Code Style Enforcement](https://github.com/bylickilabs/AstraVaultAI/actions/workflows/style.yml/badge.svg?branch=main)](https://github.com/bylickilabs/AstraVaultAI/actions/workflows/style.yml) |
 |---|---|---|
 
-|[![🔒 AstraVault AI – Dependency Audit](https://github.com/bylickilabs/AstraVaultAI/actions/workflows/dependency.yml/badge.svg?branch=main)](https://github.com/bylickilabs/AstraVaultAI/actions/workflows/dependency.yml) | [![🚀 AstraVault AI – Auto Release with Tag Generator](https://github.com/bylickilabs/AstraVaultAI/actions/workflows/release.yml/badge.svg)](https://github.com/bylickilabs/AstraVaultAI/actions/workflows/release.yml) |
-|---|---|
+|[![🔒 AstraVault AI – Dependency Audit](https://github.com/bylickilabs/AstraVaultAI/actions/workflows/dependency.yml/badge.svg?branch=main)](https://github.com/bylickilabs/AstraVaultAI/actions/workflows/dependency.yml) | [![🚀 AstraVault AI – Auto Release with Tag Generator](https://github.com/bylickilabs/AstraVaultAI/actions/workflows/release.yml/badge.svg)](https://github.com/bylickilabs/AstraVaultAI/actions/workflows/release.yml) | [![🛡️ AstraVault AI – CodeQL Security Scan](https://github.com/bylickilabs/AstraVaultAI/actions/workflows/security.yml/badge.svg)](https://github.com/bylickilabs/AstraVaultAI/actions/workflows/security.yml) |
+|---|---|---|
 
 # 🔐 AstraVault AI – Intelligent Encrypted Data Vault  
 **BYLICKILABS – Intelligence Systems & Communications**
