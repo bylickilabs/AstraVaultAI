@@ -1,4 +1,4 @@
-name: 🐍 Python Package (Conda Environment)
+name: 🧠 AstraVault AI – Conda Environment Build
 
 on:
   push:
@@ -8,46 +8,52 @@ on:
 
 jobs:
   build:
+    name: 🧩 Build & Test (Mambaforge)
     runs-on: ubuntu-latest
 
     steps:
-      - name: 🧩 Checkout repository
+      - name: 🧱 Checkout Repository
         uses: actions/checkout@v4
 
-      - name: ⚙️ Set up Miniconda
+      - name: ⚙️ Set up Mambaforge (Conda)
         uses: conda-incubator/setup-miniconda@v3
         with:
           miniforge-variant: Mambaforge
           miniforge-version: latest
+          python-version: "3.10"
           auto-update-conda: true
           activate-environment: base
           use-mamba: true
-          python-version: "3.10"
           channels: conda-forge
           channel-priority: strict
 
-      - name: 📦 Install dependencies
+      - name: 📦 Install Dependencies
         shell: bash -l {0}
         run: |
-          echo "Installing dependencies..."
+          echo ">>> Installing dependencies..."
           if [ -f environment.yml ]; then
+              echo "Using environment.yml"
               mamba env update -n base -f environment.yml
           elif [ -f requirements.txt ]; then
+              echo "Using requirements.txt"
               pip install -r requirements.txt
           else
-              echo "No environment.yml or requirements.txt found."
+              echo "⚠️ No dependency file found."
           fi
 
-      - name: 🔍 Lint with flake8
+      - name: 🔍 Lint Source Code
         shell: bash -l {0}
         run: |
-          echo "Running flake8..."
+          echo ">>> Running flake8 lint..."
           mamba install -y flake8
           flake8 . --count --exit-zero --max-line-length=127 --statistics
 
-      - name: 🧪 Run tests
+      - name: 🧪 Run Unit Tests
         shell: bash -l {0}
         run: |
-          echo "Running pytest..."
+          echo ">>> Running pytest..."
           mamba install -y pytest
           pytest -q --disable-warnings --maxfail=3
+
+      - name: ✅ Build Completed
+        run: echo "AstraVault AI – Conda build successfully finished ✔️"
