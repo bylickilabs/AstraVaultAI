@@ -1,4 +1,4 @@
-name: 🚀 AstraVault AI – Auto Release
+name: 🚀 AstraVault AI – Application Release
 
 on:
   push:
@@ -15,46 +15,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # ---------------------------------------------------------
-      # 1️⃣ Checkout Repository
-      # ---------------------------------------------------------
       - name: 🧱 Checkout Repository
         uses: actions/checkout@v4
 
-      # ---------------------------------------------------------
-      # 2️⃣ Set up Python Environment
-      # ---------------------------------------------------------
-      - name: ⚙️ Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-
-      # ---------------------------------------------------------
-      # 3️⃣ Build Distribution Package
-      # ---------------------------------------------------------
-      - name: 📦 Build Distribution
+      - name: 📦 Create ZIP Archive
         run: |
-          python -m pip install --upgrade pip
-          pip install build
-          python -m build
+          mkdir -p dist
+          zip -r dist/AstraVaultAI_${{ github.ref_name }}.zip . -x "*.git*" "__pycache__/*"
 
-      # ---------------------------------------------------------
-      # 4️⃣ Create GitHub Release
-      # ---------------------------------------------------------
-      - name: 🚀 Publish to GitHub Releases
+      - name: 🚀 Publish GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: dist/*
+          files: dist/*.zip
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # ---------------------------------------------------------
-      # 5️⃣ Completion Summary
-      # ---------------------------------------------------------
       - name: ✅ Release Completed
         run: |
           echo "============================================================"
-          echo "✅ AstraVault AI – Release Process Completed Successfully"
+          echo "✅ AstraVault AI – ZIP Release created successfully"
           echo "🔒 BYLICKILABS – Intelligence Systems & Communications"
           echo "============================================================"
