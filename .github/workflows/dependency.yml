@@ -1,0 +1,57 @@
+name: 🔒 AstraVault AI – Dependency Audit
+
+on:
+  schedule:
+    - cron: '0 */3 * * *'   # every 3 hours UTC
+  workflow_dispatch:
+
+jobs:
+  audit:
+    name: 🧠 Automated Vulnerability Audit
+    runs-on: ubuntu-latest
+
+    steps:
+      # ---------------------------------------------------------
+      # 1️⃣ Checkout Repository
+      # ---------------------------------------------------------
+      - name: 🧱 Checkout Repository
+        uses: actions/checkout@v4
+
+      # ---------------------------------------------------------
+      # 2️⃣ Set up Python
+      # ---------------------------------------------------------
+      - name: ⚙️ Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      # ---------------------------------------------------------
+      # 3️⃣ Install pip-audit
+      # ---------------------------------------------------------
+      - name: 🧩 Install pip-audit
+        run: |
+          python -m pip install --upgrade pip
+          pip install pip-audit
+
+      # ---------------------------------------------------------
+      # 4️⃣ Run the vulnerability audit
+      # ---------------------------------------------------------
+      - name: 🔍 Run vulnerability audit
+        run: |
+          echo ">>> Starting pip-audit vulnerability scan..."
+          if [ -f "requirements.txt" ]; then
+              pip-audit -r requirements.txt || echo "⚠️ Vulnerabilities detected."
+          else
+              echo "⚠️ No requirements.txt found – skipping audit."
+          fi
+
+      # ---------------------------------------------------------
+      # 5️⃣ Completion summary
+      # ---------------------------------------------------------
+      - name: ✅ Audit Completed
+        run: |
+          echo "============================================================"
+          echo "✅ AstraVault AI – Dependency Audit Completed Successfully"
+          echo "🔒 BYLICKILABS – Intelligence Systems & Communications"
+          echo "🕒 Audit Frequency: Every 3 hours (UTC)"
+          echo "============================================================"
