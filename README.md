@@ -94,7 +94,7 @@
 ## ⚙️ Quick Start
 
 ```bash
-python astravault_ai.py
+python app.py
 ```
 
 - Create a new vault & define your master password  
