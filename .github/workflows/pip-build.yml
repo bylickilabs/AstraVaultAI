@@ -1,0 +1,47 @@
+name: 🐍 AstraVault AI – Python Package (pip)
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    name: ⚙️ Build & Test (pip)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🧱 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: 📦 Install Dependencies
+        run: |
+          echo ">>> Upgrading pip..."
+          python -m pip install --upgrade pip
+          echo ">>> Installing dependencies..."
+          if [ -f requirements.txt ]; then
+              pip install -r requirements.txt
+          else
+              echo "⚠️ No requirements.txt found – skipping..."
+          fi
+
+      - name: 🔍 Lint Code
+        run: |
+          echo ">>> Running flake8..."
+          pip install flake8
+          flake8 . --count --exit-zero --max-line-length=127 --statistics
+
+      - name: 🧪 Run Tests
+        run: |
+          echo ">>> Running pytest..."
+          pip install pytest
+          pytest -q --disable-warnings --maxfail=3
+
+      - name: ✅ Build Completed
+        run: echo "AstraVault AI – pip build successfully finished ✔️"
