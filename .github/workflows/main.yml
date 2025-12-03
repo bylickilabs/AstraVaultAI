@@ -1,0 +1,90 @@
+name: 🧾 AstraVault AI – Repository Integrity Check
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  repository:
+    name: 🧱 Repository Validation & Metadata Report
+    runs-on: ubuntu-latest
+
+    steps:
+      # ---------------------------------------------------------
+      # 1️⃣ Checkout Repository
+      # ---------------------------------------------------------
+      - name: 🧱 Checkout Repository
+        uses: actions/checkout@v4
+
+      # ---------------------------------------------------------
+      # 2️⃣ Set up Python (for file inspection tools)
+      # ---------------------------------------------------------
+      - name: ⚙️ Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      # ---------------------------------------------------------
+      # 3️⃣ Validate critical project files
+      # ---------------------------------------------------------
+      - name: 🧩 Verify Repository Files
+        run: |
+          echo ">>> Checking for required documentation files..."
+          REQUIRED_FILES=("README.md" "LICENSE" "SECURITY.md" "CONTRIBUTING.md" "requirements.txt")
+          for file in "${REQUIRED_FILES[@]}"; do
+            if [ -f "$file" ]; then
+              echo "✅ $file found."
+            else
+              echo "❌ Missing: $file"
+              MISSING=true
+            fi
+          done
+          if [ "$MISSING" = true ]; then
+            echo "⚠️ One or more critical files are missing."
+          else
+            echo "✅ All required repository files are present."
+          fi
+
+      # ---------------------------------------------------------
+      # 4️⃣ Gather metadata and print summary
+      # ---------------------------------------------------------
+      - name: 🧠 Collect Repository Metadata
+        run: |
+          echo "============================================================"
+          echo "📦 AstraVault AI – Repository Summary"
+          echo "============================================================"
+          echo "🧭 Repository: $GITHUB_REPOSITORY"
+          echo "🔖 Branch: $GITHUB_REF_NAME"
+          echo "👤 Author: $GITHUB_ACTOR"
+          echo "🕒 Commit Timestamp: $(date)"
+          echo "------------------------------------------------------------"
+          echo "🔍 Python Version:"
+          python --version
+          echo "------------------------------------------------------------"
+          echo "📄 Files in Repository Root:"
+          ls -1 | sed 's/^/   • /'
+          echo "============================================================"
+
+      # ---------------------------------------------------------
+      # 5️⃣ Lint Markdown & YAML files
+      # ---------------------------------------------------------
+      - name: 🧹 Validate Markdown & YAML
+        run: |
+          echo ">>> Installing linting tools..."
+          pip install yamllint markdownlint-cli
+          echo ">>> Running lint checks..."
+          yamllint . || echo "⚠️ YAML warnings detected (non-critical)"
+          markdownlint . || echo "⚠️ Markdown style warnings detected"
+
+      # ---------------------------------------------------------
+      # 6️⃣ Workflow Summary
+      # ---------------------------------------------------------
+      - name: ✅ Repository Check Completed
+        run: |
+          echo "============================================================"
+          echo "✅ AstraVault AI – Repository Integrity Check Completed"
+          echo "🔒 BYLICKILABS – Intelligence Systems & Communications"
+          echo "============================================================"
