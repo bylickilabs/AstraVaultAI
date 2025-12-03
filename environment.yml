@@ -13,3 +13,6 @@ dependencies:
   - loguru
   - pytest
   - flake8
+  - pyinstaller
+  - nuitka
+  - pycryptodomex
