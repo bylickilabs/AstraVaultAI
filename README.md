@@ -28,11 +28,11 @@
 
 ---
 
-## 📌 Sensitive Data Shield – File Details
+## 📌 Sensitive Data Shield – 🔐 File Details
 
 ```
 ┌──────── Sensitive Data Shield ────────┐
-│ 🔐 File Risk Level: HIGH              │
+│ File Risk Level: HIGH                 │
 │ AI-Score: 0.86                        │
 │ Sensitivity:  SECRET                  │
 │---------------------------------------│
@@ -40,7 +40,7 @@
 │ SHA-1:   … [Copy]                     │
 │ SHA-256: … [Copy]                     │
 │---------------------------------------│
-│ 🔍 Integrity: 🟢 Verified             │
+│ 🔍 Integrity: 🟢 Verified            │
 │ Export Reports: JSON | TXT            │
 └───────────────────────────────────────┘
 ```
