@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v4
 
       # ---------------------------------------------------------
-      # 2️⃣ Setup Python for utility checks
+      # 2️⃣ Set up Python
       # ---------------------------------------------------------
       - name: ⚙️ Set up Python
         uses: actions/setup-python@v5
@@ -28,7 +28,15 @@ jobs:
           python-version: "3.10"
 
       # ---------------------------------------------------------
-      # 3️⃣ Verify essential documentation files
+      # 3️⃣ Set up Node.js (for markdownlint)
+      # ---------------------------------------------------------
+      - name: ⚙️ Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # ---------------------------------------------------------
+      # 4️⃣ Verify Required Files
       # ---------------------------------------------------------
       - name: 🧩 Verify Required Files
         run: |
@@ -50,20 +58,34 @@ jobs:
           fi
 
       # ---------------------------------------------------------
-      # 4️⃣ Check for syntax and YAML validity
+      # 5️⃣ Lint YAML and Markdown properly
       # ---------------------------------------------------------
-      - name: 🔍 Validate YAML & Markdown Syntax
+      - name: 🔍 Validate YAML & Markdown
         run: |
           echo ">>> Installing linting tools..."
           python -m pip install --upgrade pip > /dev/null
-          pip install yamllint markdownlint-cli > /dev/null
+          pip install yamllint > /dev/null
+          npm install -g markdownlint-cli
           echo ">>> Running YAML validation..."
           yamllint . || echo "⚠️ YAML warnings detected (non-critical)"
           echo ">>> Running Markdown validation..."
-          markdownlint . || echo "⚠️ Markdown formatting warnings detected"
+          markdownlint '**/*.md' || echo "⚠️ Markdown formatting warnings detected"
 
       # ---------------------------------------------------------
-      # 5️⃣ Gather repository metadata
+      # 6️⃣ Security Scan
+      # ---------------------------------------------------------
+      - name: 🛡️ Basic Dependency Security Scan
+        run: |
+          pip install safety > /dev/null
+          if [ -f "requirements.txt" ]; then
+            echo ">>> Scanning dependencies for vulnerabilities..."
+            safety check -r requirements.txt || echo "⚠️ Potential security warnings found."
+          else
+            echo "⚠️ No requirements.txt found – skipping dependency check."
+          fi
+
+      # ---------------------------------------------------------
+      # 7️⃣ Repository Metadata
       # ---------------------------------------------------------
       - name: 🧠 Collect Repository Metadata
         run: |
@@ -74,30 +96,14 @@ jobs:
           echo "🔖 Branch: $GITHUB_REF_NAME"
           echo "👤 Triggered by: $GITHUB_ACTOR"
           echo "🕒 Commit Timestamp: $(date)"
+          echo "🐍 Python Version: $(python --version)"
           echo "------------------------------------------------------------"
           echo "📄 Files in Repository Root:"
           ls -1 | sed 's/^/   • /'
-          echo "------------------------------------------------------------"
-          echo "🐍 Python Version:"
-          python --version
           echo "============================================================"
 
       # ---------------------------------------------------------
-      # 6️⃣ Security Check for Dependencies
-      # ---------------------------------------------------------
-      - name: 🛡️ Basic Dependency Security Scan
-        run: |
-          echo ">>> Installing safety..."
-          pip install safety > /dev/null
-          if [ -f "requirements.txt" ]; then
-            echo ">>> Scanning dependencies for vulnerabilities..."
-            safety check -r requirements.txt || echo "⚠️ Potential security warnings found."
-          else
-            echo "⚠️ No requirements.txt found – skipping dependency check."
-          fi
-
-      # ---------------------------------------------------------
-      # 7️⃣ Completion Summary
+      # 8️⃣ Completion Summary
       # ---------------------------------------------------------
       - name: ✅ Integrity Check Completed
         run: |
